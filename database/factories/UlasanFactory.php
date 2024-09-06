@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 use App\Models\Wisata;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ulasan>
@@ -23,8 +23,7 @@ class UlasanFactory extends Factory
             'user_id' => User::where('is_admin', 0)->pluck('id')->random(),
             'wisata_id' => Wisata::pluck('id')->random(),
             'tanggal_ulasan' => $this->faker->date(),
-            'komentar' => $this->faker->paragraph
-            
+            'komentar' => $this->faker->paragraph,
 
         ];
     }

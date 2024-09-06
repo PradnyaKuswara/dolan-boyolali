@@ -7,7 +7,6 @@ use App\Models\Galeri;
 use App\Models\Ulasan;
 use App\Models\User;
 use App\Models\Wisata;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -22,22 +21,20 @@ class DashboardController extends Controller
             $galeriCount = Galeri::count();
             $ulasanCount = Ulasan::count();
 
-
             return view('admin.index', [
                 'wisataCount' => $wisataCount,
                 'guestCount' => $guestCount,
                 'eventCount' => $eventCount,
                 'galeriCount' => $galeriCount,
-                'ulasanCount' => $ulasanCount
+                'ulasanCount' => $ulasanCount,
             ]);
         }
 
-        if (!auth()->user()->is_admin)
-        {
+        if (! auth()->user()->is_admin) {
             $ulasanCount = Ulasan::where('user_id', auth()->user()->id)->count();
 
             return view('user.index', [
-                'ulasanCount' => $ulasanCount
+                'ulasanCount' => $ulasanCount,
             ]);
         }
     }

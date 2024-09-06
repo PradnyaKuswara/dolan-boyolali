@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UlasanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,10 +25,6 @@ Route::get('deskripsi-event/{event}', [HomeController::class, 'deskripsievent'])
 Route::get('deskripsi-wisata/{wisata}', [HomeController::class, 'deskripsiwisata'])->name('deskripsiwisata');
 Route::get('cari-wisata', [HomeController::class, 'cariWisata'])->name('cariwisata');
 Route::get('cari-event', [HomeController::class, 'cariEvent'])->name('carievent');
-
-
-
-
 
 Route::middleware('guest')->group(function () {
     // Login

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -25,7 +24,7 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard.index');
             }
 
-            if (!auth()->user()->is_admin) {
+            if (! auth()->user()->is_admin) {
                 return redirect()->route('index');
             }
 

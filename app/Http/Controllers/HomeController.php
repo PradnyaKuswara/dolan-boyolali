@@ -12,9 +12,10 @@ class HomeController extends Controller
     {
         $wisatas = Wisata::take(4)->get();
         $events = Event::take(3)->get();
+
         return view('index', [
             'wisatas' => $wisatas,
-            'events' => $events
+            'events' => $events,
         ]);
     }
 
@@ -26,8 +27,9 @@ class HomeController extends Controller
     public function destinasiwisata()
     {
         $wisatas = Wisata::paginate(8);
+
         return view('Wisata.destinasiwisata', [
-            'wisatas' => $wisatas
+            'wisatas' => $wisatas,
         ]);
     }
 
@@ -41,25 +43,26 @@ class HomeController extends Controller
 
         return view('Wisata.deskripsiwisata', [
             'wisata' => $wisata->with('ulasans')->find($wisata->id),
-            'nearbyPlaces' => $nearbyPlaces
+            'nearbyPlaces' => $nearbyPlaces,
         ]);
     }
 
     public function events()
     {
         $events = Event::paginate(8);
+
         return view('Events.event', [
-            'events' => $events
+            'events' => $events,
         ]);
     }
-
 
     public function deskripsievent(Event $event)
     {
         $popularEvents = Event::where('id', '!=', $event->id)->inRandomOrder()->take(3)->get();
+
         return view('Events.deskripsievent', [
             'event' => $event,
-            'popularEvents' => $popularEvents
+            'popularEvents' => $popularEvents,
         ]);
     }
 
@@ -67,10 +70,10 @@ class HomeController extends Controller
     {
 
         $request->validate([
-            'search' => 'required'
+            'search' => 'required',
         ]);
 
-        $wisata = Wisata::where('nama_wisata', 'like', '%' . $request->search . '%')->first();
+        $wisata = Wisata::where('nama_wisata', 'like', '%'.$request->search.'%')->first();
 
         if ($wisata) {
             return redirect()->route('deskripsiwisata', $wisata->id);
@@ -82,10 +85,10 @@ class HomeController extends Controller
     public function cariEvent(Request $request)
     {
         $request->validate([
-            'search' => 'required'
+            'search' => 'required',
         ]);
 
-        $event = Event::where('nama_event', 'like', '%' . $request->search . '%')->first();
+        $event = Event::where('nama_event', 'like', '%'.$request->search.'%')->first();
 
         if ($event) {
             return redirect()->route('deskripsievent', $event->id);

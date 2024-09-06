@@ -14,7 +14,6 @@ use Illuminate\Validation\Rule;
 
 class EventController extends Controller
 {
-
     protected $searchService;
 
     public function __construct(SearchService $searchService)
@@ -27,7 +26,7 @@ class EventController extends Controller
         $events = $this->searchService->handle($request, new Event, ['nama_event', 'tanggal_event', 'lokasi_event', 'deskripsi_event'])->latest()->paginate(10)->withQueryString()->withPath('events');
 
         return view('admin.event.index', [
-            'events' => $events
+            'events' => $events,
         ]);
     }
 
@@ -51,7 +50,7 @@ class EventController extends Controller
     public function edit(Event $event): View
     {
         return view('admin.event.edit', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 
@@ -91,7 +90,7 @@ class EventController extends Controller
         $event->load('galeris');
 
         return view('admin.event.galeri', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 
@@ -99,7 +98,7 @@ class EventController extends Controller
     {
 
         $data = $request->validate([
-            'image' => ['required', Rule::file()->image()->max(1024 * 1), 'mimes:jpg,jpeg,png']
+            'image' => ['required', Rule::file()->image()->max(1024 * 1), 'mimes:jpg,jpeg,png'],
         ]);
 
         if ($event->galeris()->count() >= 12) {
@@ -109,7 +108,7 @@ class EventController extends Controller
         $imagePath = $data['image']->store(Galeri::IMAGE_PATH);
 
         $galeri = Galeri::create([
-            'image' => $imagePath
+            'image' => $imagePath,
         ]);
 
         $event->galeris()->attach($galeri);

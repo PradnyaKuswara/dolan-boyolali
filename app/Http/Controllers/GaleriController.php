@@ -38,7 +38,7 @@ class GaleriController extends Controller
 
         return view('admin.galeri.create', [
             'events' => $events,
-            'wisatas' => $wisatas
+            'wisatas' => $wisatas,
         ]);
     }
 
@@ -64,7 +64,7 @@ class GaleriController extends Controller
         return view('admin.galeri.edit', [
             'galeri' => $galeri,
             'events' => $events,
-            'wisatas' => $wisatas
+            'wisatas' => $wisatas,
         ]);
     }
 

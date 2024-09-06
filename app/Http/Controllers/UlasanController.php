@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Ulasan;
-use Illuminate\Contracts\View\View;
-use App\Models\User;
 use App\Models\Wisata;
 use App\Services\SearchService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class UlasanController extends Controller
 {
@@ -24,18 +23,18 @@ class UlasanController extends Controller
         $wisatas = Wisata::with('ulasans')->paginate(10);
 
         return view('admin.ulasan.index', [
-            'wisatas' => $wisatas
+            'wisatas' => $wisatas,
         ]);
     }
 
     public function detail(Request $request, Wisata $wisata): View
     {
         $ulasan = Ulasan::where('wisata_id', $wisata->id);
-        $ulasans = $this->searchService->handle($request, $ulasan, ['name', 'nama_wisata', 'tanggal_ulasan', 'komentar'], ['user', 'wisata'])->latest()->paginate(10)->withQueryString()->withPath('detail/' . $wisata->id);
+        $ulasans = $this->searchService->handle($request, $ulasan, ['name', 'nama_wisata', 'tanggal_ulasan', 'komentar'], ['user', 'wisata'])->latest()->paginate(10)->withQueryString()->withPath('detail/'.$wisata->id);
 
         return view('admin.ulasan.detail', [
             'ulasans' => $ulasans,
-            'wisata' => $wisata
+            'wisata' => $wisata,
         ]);
     }
 
@@ -45,7 +44,7 @@ class UlasanController extends Controller
         $ulasans = $this->searchService->handle($request, $ulasans, ['name', 'nama_wisata', 'tanggal_ulasan', 'komentar'], ['user', 'wisata'])->latest()->paginate(10)->withQueryString()->withPath('ulasans');
 
         return view('user.ulasan.index', [
-            'ulasans' => $ulasans
+            'ulasans' => $ulasans,
         ]);
     }
 
@@ -54,7 +53,7 @@ class UlasanController extends Controller
         $ulasan = Ulasan::where('wisata_id', $wisata->id);
 
         return view('admin.ulasan.table', [
-            'ulasans' => $this->searchService->handle($request, $ulasan, ['name', 'nama_wisata', 'tanggal_ulasan', 'komentar'], ['user', 'wisata'])->latest()->paginate(10)->withQueryString()->withPath('detail/' . $wisata->id),
+            'ulasans' => $this->searchService->handle($request, $ulasan, ['name', 'nama_wisata', 'tanggal_ulasan', 'komentar'], ['user', 'wisata'])->latest()->paginate(10)->withQueryString()->withPath('detail/'.$wisata->id),
         ]);
     }
 
@@ -66,13 +65,12 @@ class UlasanController extends Controller
             'ulasans' => $this->searchService->handle($request, $ulasans, ['name', 'nama_wisata', 'tanggal_ulasan', 'komentar'], ['user', 'wisata'])->latest()->paginate(10)->withQueryString()->withPath('ulasans'),
         ]);
     }
-    
 
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'wisata_id' => ['required', 'exists:wisatas,id'],
-            'komentar' => ['required', 'string']
+            'komentar' => ['required', 'string'],
         ]);
 
         Ulasan::create([
@@ -86,9 +84,9 @@ class UlasanController extends Controller
     }
 
     public function destroy(Ulasan $ulasan): RedirectResponse
-{
-    $ulasan->delete();
-    return back()->with('success', 'Ulasan berhasil dihapus');
-}
+    {
+        $ulasan->delete();
 
+        return back()->with('success', 'Ulasan berhasil dihapus');
+    }
 }
