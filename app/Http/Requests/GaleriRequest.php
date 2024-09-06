@@ -30,7 +30,7 @@ class GaleriRequest extends FormRequest
             'nama_galeri' => ['required', 'string', 'max:255'],
             'lokasi_galeri' => ['required', 'string'],
             'foto_galeri' => [Rule::when($this->conditionalImageUpdate(), '', ['required']), Rule::file()->image()->max(1024 * 1), 'mimes:jpg,jpeg,png'],
-            'deskripsi_galeri' => ['required', 'string']
+            'deskripsi_galeri' => ['required', 'string'],
         ];
     }
 

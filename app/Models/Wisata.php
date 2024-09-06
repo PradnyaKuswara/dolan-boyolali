@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
-
 class Wisata extends Model
 {
     use HasFactory;
@@ -35,7 +34,7 @@ class Wisata extends Model
         return Storage::url($this->foto_wisata);
     }
 
-    public function galeris (): BelongsToMany
+    public function galeris(): BelongsToMany
     {
         return $this->belongsToMany(Galeri::class)->withTimestamps();
     }
@@ -43,18 +42,18 @@ class Wisata extends Model
     private function calculateDistance($lat1, $lon1, $lat2, $lon2)
     {
         $earthRadius = 6371; // Radius bumi dalam kilometer
-    
+
         $dLat = deg2rad($lat2 - $lat1);
         $dLon = deg2rad($lon2 - $lon1);
-    
+
         $a = sin($dLat / 2) * sin($dLat / 2) +
             cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
             sin($dLon / 2) * sin($dLon / 2);
-    
+
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-    
+
         $distance = $earthRadius * $c;
+
         return round($distance, 2); // Membulatkan jarak ke dua desimal
     }
-    
 }

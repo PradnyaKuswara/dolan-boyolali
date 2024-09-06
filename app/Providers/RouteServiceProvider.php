@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-
     public static function HOME()
     {
         $isAdmin = auth()->user()->is_admin;
@@ -22,6 +21,7 @@ class RouteServiceProvider extends ServiceProvider
                 return '/user/dashboard';
             }
         }
+
         return '/login';
     }
 

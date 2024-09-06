@@ -48,19 +48,19 @@ class SearchService
 
     private function searchQueryBuilder(object $model, array $validations, object $request, ?array $relations = null, ?array $conditions = null)
     {
-        if (!empty($request->get($this->key))) {
+        if (! empty($request->get($this->key))) {
             $model = $model->where(function ($query) use ($validations, $request, $relations, $model, $conditions) {
                 foreach ($validations as $key => $value) {
                     if ($key === 0) {
-                        $query->where($value, 'LIKE', '%' . $request->get($this->key) . '%');
+                        $query->where($value, 'LIKE', '%'.$request->get($this->key).'%');
 
                         continue;
                     }
 
-                    $query->orWhere($value, 'LIKE', '%' . $request->get($this->key) . '%');
+                    $query->orWhere($value, 'LIKE', '%'.$request->get($this->key).'%');
                 }
 
-                if (!empty($relations)) {
+                if (! empty($relations)) {
                     foreach ($relations as $relation) {
                         $model = $model->with($relation);
                         $relatedModel = $model->getRelation($relation)->getRelated();
@@ -73,19 +73,19 @@ class SearchService
                         //reset array key to 0
                         $validRelationConditions = array_values($validRelationConditions);
 
-                        if (!empty($validRelationConditions)) {
+                        if (! empty($validRelationConditions)) {
                             $query->orWhere(function ($query2) use ($validRelationConditions, $request, $relation) {
                                 foreach ($validRelationConditions as $key => $value2) {
                                     if ($key === 0) {
                                         $query2->whereHas($relation, function ($query3) use ($value2, $request) {
-                                            $query3->where($value2, 'LIKE', '%' . $request->get($this->key) . '%');
+                                            $query3->where($value2, 'LIKE', '%'.$request->get($this->key).'%');
                                         });
 
                                         continue;
                                     }
 
                                     $query2->orWhereHas($relation, function ($query3) use ($value2, $request) {
-                                        $query3->where($value2, 'LIKE', '%' . $request->get($this->key) . '%');
+                                        $query3->where($value2, 'LIKE', '%'.$request->get($this->key).'%');
                                     });
                                 }
                             });
@@ -100,21 +100,20 @@ class SearchService
 
     private function searchQueryModel(object $model, array $validations, object $request, ?array $relations = null, ?array $conditions = null)
     {
-        if (!empty($request->get($this->key))) {
+        if (! empty($request->get($this->key))) {
             $model = $model->where(function ($query) use ($validations, $request) {
                 foreach ($validations as $key => $value) {
                     if ($key === 0) {
-                        $query->where($value, 'LIKE', '%' . $request->get($this->key) . '%');
+                        $query->where($value, 'LIKE', '%'.$request->get($this->key).'%');
 
                         continue;
                     }
 
-                    $query->orWhere($value, 'LIKE', '%' . $request->get($this->key) . '%');
+                    $query->orWhere($value, 'LIKE', '%'.$request->get($this->key).'%');
                 }
             });
 
-
-            if (!empty($relations)) {
+            if (! empty($relations)) {
                 foreach ($relations as $relation) {
                     $model = $model->with($relation);
                     $relatedModel = $model->getRelation($relation)->getRelated();
@@ -125,20 +124,22 @@ class SearchService
                     //reset array key to 0
                     $validRelationConditions = array_values($validRelationConditions);
 
-                    if (!empty($validRelationConditions)) {
+                    if (! empty($validRelationConditions)) {
                         $model = $model->orWhereHas($relation, function ($query) use ($validRelationConditions, $request) {
                             foreach ($validRelationConditions as $key => $value) {
                                 if ($key === 0) {
-                                    $query->where($value, 'LIKE', '%' . $request->get($this->key) . '%');
+                                    $query->where($value, 'LIKE', '%'.$request->get($this->key).'%');
+
                                     continue;
                                 }
-                                $query->orWhere($value, 'LIKE', '%' . $request->get($this->key) . '%');
+                                $query->orWhere($value, 'LIKE', '%'.$request->get($this->key).'%');
                             }
                         });
                     }
                 }
             }
         }
+
         return $model;
     }
 

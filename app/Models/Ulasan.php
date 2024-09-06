@@ -10,10 +10,10 @@ class Ulasan extends Model
     use HasFactory;
 
     protected $fillable = [
-        "user_id",
-        "wisata_id",
-        "tanggal_ulasan",
-        "komentar"
+        'user_id',
+        'wisata_id',
+        'tanggal_ulasan',
+        'komentar',
     ];
 
     public function user()

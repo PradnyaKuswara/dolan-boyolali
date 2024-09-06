@@ -2,9 +2,6 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\WisataController;
 use App\Http\Controllers\UlasanController;
 use Illuminate\Support\Facades\Route;
 
